@@ -1,0 +1,333 @@
+{% load leaflet_tags %}
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
+  <script src="../static/javascript/leaflet-src.js"></script>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"/>
+    
+
+    <script src="../static/javascript/Leaflet.draw.js"></script>
+    <script src="../static/javascript/Leaflet.Draw.Event.js"></script>
+ <link rel="stylesheet" href="http://leaflet.github.io/Leaflet.draw/src/leaflet.draw.css"/>
+
+    <script src="../static/javascript/Toolbar.js"></script>
+    <script src="../static/javascript/Tooltip.js"></script>
+
+    <script src="../static/javascript/GeometryUtil.js"></script>
+    <script src="../static/javascript/LatLngUtil.js"></script>
+    <script src="../static/javascript/LineUtil.Intersect.js"></script>
+    <script src="../static/javascript/Polygon.Intersect.js"></script>
+    <script src="../static/javascript/Polyline.Intersect.js"></script>
+    <script src="../static/javascript/TouchEvents.js"></script>
+
+    <script src="../static/javascript/DrawToolbar.js"></script>
+    <script src="../static/javascript/Draw.Feature.js"></script>
+    <script src="../static/javascript/Draw.SimpleShape.js"></script>
+    <script src="../static/javascript/Draw.Polyline.js"></script>
+    <script src="../static/javascript/Draw.Marker.js"></script>
+    <script src="../static/javascript/Draw.Circle.js"></script>
+    <script src="../static/javascript/Draw.CircleMarker.js"></script>
+    <script src="../static/javascript/Draw.Polygon.js"></script>
+    <script src="../static/javascript/Draw.Rectangle.js"></script>
+
+
+    <script src="../static/javascript/EditToolbar.js"></script>
+    <script src="../static/javascript/EditToolbar.Edit.js"></script>
+    <script src="../static/javascript/EditToolbar.Delete.js"></script>
+
+    <script src="../static/javascript/Control.Draw.js"></script>
+
+    <script src="../static/javascript/Edit.Poly.js"></script>
+    <script src="../static/javascript/Edit.SimpleShape.js"></script>
+    <script src="../static/javascript/Edit.Rectangle.js"></script>
+    <script src="../static/javascript/Edit.Marker.js"></script>
+    <script src="../static/javascript/Edit.CircleMarker.js"></script>
+    <script src="../static/javascript/Edit.Circle.js"></script>
+    
+
+ 
+ <link rel="stylesheet" href="https://labs.easyblog.it/maps/leaflet-search/src/leaflet-search.css" />
+ <script src="../static/javascript/leaflet-search.js"></script>
+
+    <head>
+  
+
+       <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> 
+    </head>
+    <body>
+    <div id="banner">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0"  height="60px">
+			<tr>
+				              
+				<td width="30%" height="50px"></td>
+				<td width="52%" height="60px" valign="top"><img border=0  src="../static/img/index.png" style='float:right; padding-right:5px; vertical-align:middle'>
+				</td>               
+			</tr>
+		</table>
+    <nav class="navbar navbar-expand-sm  navbar-light justify-content-end" style="background-color:#ff9800 ; height:35px;border-radius: 10px; width:99%;margin-left:8px;">
+    <a class="navbar-brand" href="#">States</a>
+    
+ <div id="navbarNavDropdown" class="navbar-collapse collapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               Madhya Pradesh
+                </a>
+                <div class="dropdown-menu " aria-labelledby="navbarDropdown">
+               <a class="dropdown-item " href="{% url 'Maharashtra' %}">Maharashtra</a>
+                <a class="dropdown-item" href="{% url 'Rajasthan' %}">Rajasthan</a>
+                <a class="dropdown-item" href="{% url 'Punjab' %}">Punjab</a>
+                <a class="dropdown-item" href="{% url 'Gujrat' %}">Gujrat</a>
+                </div>
+            </li>
+            
+
+        </ul>
+        <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'index' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Agriculture' %}">Agriculture</a>
+                </li>
+                 <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Climate' %}">Climate</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Dams' %}">Dams</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Population' %}">Population</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Resources' %}">Resources</a>
+                </li>
+                
+        </ul>
+        </div>
+  </nav>
+  
+  
+  
+ 
+  
+<div id="agrimap" style="height: 510px; width: 97%; margin:23px; border-style: solid;
+  border-color: lightgrey; border-radius: 5px; margin-top:4px;"></div>
+  
+
+    </body>
+    
+<style>
+.agrimap {
+  margin-top: 100px;
+  margin-bottom: 100px;
+  margin-right: 150px;
+  margin-left: 80px;
+}
+    
+    .legend {
+    line-height: 18px;
+    color: #555;
+}
+.legend i {
+    width: 18px;
+    height: 18px;
+    float: left;
+    margin-right: 8px;
+    opacity: 0.7;
+}
+
+.info {
+    padding: 6px 8px;
+    
+    background: white;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+}
+.info h4 {
+    margin: 0 0 5px;
+    color: #777;
+}
+
+
+    </style>
+    
+
+<script>  
+
+
+
+  var map = L.map('agrimap').setView([22.9734, 78.6569], 5),
+            drawnItems = L.featureGroup().addTo(map);
+  
+  
+
+var osm =L.tileLayer('http://localhost:8080/styles/klokantech-basic/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+var google =L.tileLayer('  http://www.google.cn/maps/vt?lyrs=s@189&gl=cn&x={x}&y={y}&z={z} ', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+});
+ 
+           
+var topo  =L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+});
+ 
+
+
+var incidences = L.geoJson(null, {pointToLayer: function (feature, latlng) {return L.marker(latlng, {icon: L.icon({iconUrl: "../static/img/red.png",iconSize: [28, 32],iconAnchor: [12, 28],popupAnchor: [0, -25]}),title: feature.properties.title,
+riseOnHover: true});},}).addTo(map);
+
+
+var incidencesUrl = 'incidences';
+$.getJSON(incidencesUrl, function (data) {
+incidences.addData(data);});
+
+var myStyle = {
+    "color": "#006400",
+    "weight": 1,
+    "opacity": 0.65
+};
+var county = L.geoJSON(county, {
+     style: myStyle
+ });
+var countyUrl = 'county';
+$.getJSON(countyUrl, function (data) {
+county.addData(data);});
+
+
+
+
+var m = {
+    "color": "#b91b1b",
+    "weight": 2,
+    "opacity": 0.90
+};
+var country = L.geoJSON(country, {
+    style: m
+});
+var countryUrl = 'country';
+$.getJSON(countryUrl, function (data) {
+country.addData(data);});
+
+
+
+
+  //var wmsayer = L.tileLayer.wms('https://sedac.ciesin.columbia.edu/geoserver/wms', {
+    //layers: 'sdei:sdei-trends-freshwater-availability-grace',
+    //format: 'image/png',
+  //transparent: true
+//});
+  
+
+ var landCover = L.tileLayer.wms('https://bhuvan-vec2.nrsc.gov.in/bhuvan/wms', {
+     layers: 'lulc:MP_LULC50K_1112',
+     format: 'image/png',
+   transparent: true
+ });
+
+var wasteland = L.tileLayer.wms('https://bhuvan-vec2.nrsc.gov.in/bhuvan/wms', {
+     layers: 'wasteland:MP_WL50K_0809',
+     format: 'image/png',
+   transparent: true
+ });
+var geo = L.tileLayer.wms('https://bhuvan-vec2.nrsc.gov.in/bhuvan/wms', {
+     layers: 'geomorphology:MP_GM50K_0506',
+     format: 'image/png',
+   transparent: true
+ });
+var lineament = L.tileLayer.wms('https://bhuvan-vec2.nrsc.gov.in/bhuvan/wms', {
+     layers: 'lineament:MP_LN50K_0506',
+     format: 'image/png',
+   transparent: true
+ });
+
+var baseMaps = {
+    "osm": osm,
+    "topo": topo,
+    "google" :google
+};
+var overlayMaps = {
+    "Land Use Land Cover": landCover,
+    "Wasteland":wasteland,
+    "geomorphology":geo,
+    "Lineament" :lineament 
+};
+var greenIcon = L.icon({
+    iconUrl: '../static/img/red.png',
+    shadowUrl: '../static/img/red.png',
+
+    iconSize:     [38, 95], // size of the icon
+    shadowSize:   [50, 64], // size of the shadow
+    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+    shadowAnchor: [4, 62],  // the same for the shadow
+    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+});
+map.addControl( new L.Control.Search({
+	 
+	 
+		url: 'https://nominatim.openstreetmap.org/search?format=json&q={s}',
+		jsonpParam: 'json_callback',
+		propertyName: 'display_name',
+		propertyLoc: ['lat','lon'],
+		marker: greenIcon,
+	
+		autoCollapse: true,
+		autoType: false,
+		minLength: 2,
+		zoom:5
+		
+		
+	}) );
+     
+   L.control.layers(baseMaps, overlayMaps,{ 'drawlayer': drawnItems },{ position: 'topright', collapsed: false }).addTo(map);
+   
+    map.addControl(new L.Control.Draw({
+        edit: {
+            featureGroup: drawnItems,
+            poly: {
+                allowIntersection: false
+            }
+        },
+        draw: {
+            polygon: {
+                allowIntersection: false,
+                showArea: true
+            }
+        }
+    }));
+    map.on(L.Draw.Event.CREATED, function (event) {
+        var layer = event.layer;
+
+        drawnItems.addLayer(layer);
+    });
+    
+    L.control.scale().addTo(map);
+    L.control.mousePosition().addTo(map);
+     
+     /*
+     L.control.layers({
+        baseMaps, overlayMaps
+        },{ 'drawlayer': drawnItems }, { position: 'topleft', collapsed: false }).addTo(map);
+     L.control.scale().addTo(map);
+     */
+     
+ 
+	
+        
+</script>
+</html>
